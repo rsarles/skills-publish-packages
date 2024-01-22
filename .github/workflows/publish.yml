@@ -20,7 +20,13 @@ jobs:
           tags: type=sha
       - name: Login to GHCR
         uses: docker/login-actions@v3
-        with: 
+         with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build container
+        uses: docker/build-push-action@v5
+        with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
